@@ -1,0 +1,55 @@
+/* Additional inline styles for quick testing */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.dropdown-container {
+  margin-bottom: 20px;
+  position: relative;
+  width: 300px;
+}
+
+.dropdown-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#search-dropdown {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dropdown-table {
+  position: absolute;
+  top: calc(100% + 5px);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-table.hidden {
+  display: none;
+}
+
+.dropdown-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dropdown-table th,
+.dropdown-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropdown-table tr.highlighted {
+  background-color: #f1f1f1;
+}

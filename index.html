@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Table Plugin Test</title>
+  <link rel="stylesheet" href="g3.css"> <!-- Add your styles.css file here -->
+  <style>
+    
+  </style>
+</head>
+<body>
+  <h1>Dropdown Table Plugin Test</h1>
+
+  <!-- Static Data Test -->
+  <div class="dropdown-container">
+    <label for="static-dropdown">Static Data Dropdown:</label>
+    <input type="text" id="static-dropdown" placeholder="Search...">
+  </div>
+
+  <!-- AJAX Data Test -->
+  <div class="dropdown-container">
+    <label for="ajax-dropdown">AJAX Data Dropdown:</label>
+    <input type="text" id="ajax-dropdown" placeholder="Search...">
+  </div>
+
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="g3.js"></script> <!-- Add your plugin JS file here -->
+
+  <script>
+   $(document).ready(function () {
+    // Static Data Example
+    $('#static-dropdown').dropdownTable({
+      columns: [
+        { title: 'Invoice No', data: 'invoiceNo' },
+        { title: 'Invoice Date', data: 'invoiceDate' },
+        { title: 'Amount', data: 'amount' },
+      ],
+      hiddenField: 'id', // Hidden field (e.g., primary key)
+      data: [
+        { id: 1, invoiceNo: 'INVCVR2400099271', invoiceDate: '10/28/2024', amount: '33579.04' },
+        { id: 2, invoiceNo: 'INVCVR2400099225', invoiceDate: '10/28/2024', amount: '2892.73' },
+        { id: 3, invoiceNo: 'INVCVR2400099176', invoiceDate: '10/28/2024', amount: '37062.62' },
+        { id: 4, invoiceNo: 'INVCVR2400099000', invoiceDate: '10/27/2024', amount: '12345.67' },
+        { id: 5, invoiceNo: 'INVCVR2400098555', invoiceDate: '10/26/2024', amount: '54321.00' },
+      ],
+      useAjax: false,
+      width:'700px',
+      limit: 3, // Show only 3 results
+      onSelect: function (selectedData) {
+        console.log('Selected Data (Static):', selectedData);
+      },
+    });
+
+
+    // AJAX Data Example
+    $('#ajax-dropdown').dropdownTable({
+      columns: [
+        { title: 'Invoice No', data: 'invoiceNo' },
+        { title: 'Invoice Date', data: 'invoiceDate' },
+        { title: 'Amount', data: 'amount' },
+        { title: 'Customer', data: 'customerName' },
+      ],
+      width:'800px',
+      hiddenField: 'id', // Hidden field (e.g., primary key)
+      ajax: 'invdb.php', // Replace with your API endpoint
+      useAjax: true,
+      onSelect: function (selectedData) {
+        console.log('Selected Data (AJAX):', selectedData);
+      },
+    });
+});
+
+  </script>
+</body>
+</html>
