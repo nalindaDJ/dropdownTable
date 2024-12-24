@@ -8,6 +8,7 @@ body {
   margin-bottom: 20px;
   position: relative;
   width: 300px;
+  font-size: 12px;
 }
 
 .dropdown-container label {
@@ -41,6 +42,14 @@ body {
 .dropdown-table table {
   width: 100%;
   border-collapse: collapse;
+  position: relative; /* Ensure proper stacking context for header */
+}
+
+.dropdown-table thead {
+  position: sticky;
+  top: 0; /* Stick the header at the top */
+  background: #fff; /* Background color for the sticky header */
+  z-index: 1; /* Ensure header appears above the rows */
 }
 
 .dropdown-table th,
@@ -52,4 +61,38 @@ body {
 
 .dropdown-table tr.highlighted {
   background-color: #f1f1f1;
+}
+
+.dropdown-table tbody {
+  max-height: 200px; /* Set max height for scrolling */
+  overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+.hidden {
+  display: none;
+}
+
+.dropdown-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.dropdown-tag {
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-tag .remove-tag {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+select.dropdown-table-select {
+  display: none;
 }
