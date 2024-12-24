@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dropdown Table Plugin Test</title>
-  <link rel="stylesheet" href="g3.css"> <!-- Add your styles.css file here -->
+  <link rel="stylesheet" href="dropdown-table.css"> <!-- Add your styles.css file here -->
   <style>
     
   </style>
@@ -24,9 +24,36 @@
     <input type="text" id="ajax-dropdown" placeholder="Search...">
   </div>
 
+  <!-- AJAX Data Test -->
+  <div class="dropdown-container">
+    <label for="ajax-addropdown">AJAX Data Additional param Dropdown:</label>
+    <input type="text" id="ajax-addropdown" placeholder="Search...">
+  </div>
+
+
+  <div class="dropdown-container">
+    <label for="search-dropdown">Row Template</label>
+    <input type="text" id="search-dropdown" placeholder="Search...">
+  </div>
+
+  <div class="dropdown-container">
+    <label for="ajax-multidropdown">AJAX Data Dropdown:</label>
+    <input type="text" id="ajax-multidropdown" placeholder="Search..." />
+  </div>
+
+  <div class="dropdown-container">
+    <label for="select-dropdown">Select Dropdown:</label>
+    <select id="select-dropdown" multiple>
+      <!-- Pre-existing values -->
+      <option value="1">INV001</option>
+      <option value="3">INV003</option>
+    </select>
+  </div>
+  
+
   <!-- Include jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="g3.js"></script> <!-- Add your plugin JS file here -->
+  <script src="jquery.dropdown-table.js"></script> <!-- Add your plugin JS file here -->
 
   <script>
    $(document).ready(function () {
@@ -57,6 +84,26 @@
     // AJAX Data Example
     $('#ajax-dropdown').dropdownTable({
       columns: [
+        { title: '#', data: 'row_num' },
+        { title: 'Invoice No', data: 'invoiceNo' },
+        { title: 'Invoice Date', data: 'invoiceDate' },
+        { title: 'Amount', data: 'amount' },
+        { title: 'Customer', data: 'customerName' },
+      ],
+      width:'800px',
+      hiddenField: ['id'], // Hidden field (e.g., primary key)
+      defaultColumn: 1,
+      ajaxURL: 'invoice_db.php', // Replace with your API endpoint
+      useAjax: true,
+      limit: 100, // Show only 3 results
+      onSelect: function (selectedData) {
+        console.log('Selected Data (AJAX):', selectedData);
+      },
+    });
+
+     // AJAX Data Example
+     $('#ajax-addropdown').dropdownTable({
+      columns: [
         { title: 'Invoice No', data: 'invoiceNo' },
         { title: 'Invoice Date', data: 'invoiceDate' },
         { title: 'Amount', data: 'amount' },
@@ -64,12 +111,96 @@
       ],
       width:'800px',
       hiddenField: 'id', // Hidden field (e.g., primary key)
-      ajax: 'invdb.php', // Replace with your API endpoint
+      ajaxURL: 'invoice_db2.php', // Replace with your API endpoint
       useAjax: true,
+      ajaxParams:{invdate: '2024-01-10', status: { 'msgs' : 'OK','code' : '200'}},
       onSelect: function (selectedData) {
         console.log('Selected Data (AJAX):', selectedData);
       },
     });
+
+
+    $("#search-dropdown").dropdownTable({
+    columns: [
+      { title: "#", data: "id" },
+      { title: "Invoice No", data: "invoice_no" },
+      { title: "Amount", data: "amount" },
+      { title: "Customer", data: "customer" }
+    ],
+    data: [
+      { id: 1, invoice_no: "INV001", amount: "$500", customer: "John Doe" },
+      { id: 2, invoice_no: "INV002", amount: "$300", customer: "Jane Smith" },
+      { id: 3, invoice_no: "INV003", amount: "$200", customer: "Chris Johnson" }
+    ],
+    rowTemplate: function (row, index) {
+      // Custom HTML for each row
+      return `
+        <tr data-index="${index}">
+          <td>${index + 1}</td>
+          <td><strong>${row.invoice_no}</strong></td>
+          <td style="color: green;">${row.amount}</td>
+          <td><em>${row.customer}</em></td>
+        </tr>
+      `;
+    },
+    onSelect: function (row) {
+      console.log("Selected Row:", row);
+    },
+  });
+
+
+  $("#ajax-multidropdown").dropdownTable({
+    columns: [
+      { title: "#", data: "id" },
+      { title: "Invoice No", data: "invoice_no" },
+      { title: "Invoice Date", data: "invoice_date" },
+      { title: "Amount", data: "amount" },
+      { title: "Customer", data: "customer" },
+    ],
+    data: [
+      { id: 1, invoice_no: "INV001", invoice_date: "2023-07-01", amount: "$500", customer: "John Doe" },
+      { id: 2, invoice_no: "INV002", invoice_date: "2023-07-02", amount: "$600", customer: "Jane Smith" },
+      { id: 3, invoice_no: "INV003", invoice_date: "2023-07-03", amount: "$700", customer: "Chris Johnson" },
+      { id: 4, invoice_no: "INV004", invoice_date: "2023-07-04", amount: "$800", customer: "Patricia Lee" },
+    ],
+    multiselect: true, // Enable multiselect
+    onSelect: function (selectedRow) {
+      console.log("Selected Row:", selectedRow);
+    },
+    onSelectionChange: function (selectedRows) {
+      console.log("Selection Changed:", selectedRows);
+    },
+  });
+
+
+  $("#select-dropdown").dropdownTable({
+    columns: [
+      { title: "#", data: "id" },
+      { title: "Invoice No", data: "invoice_no" },
+      { title: "Invoice Date", data: "invoice_date" },
+      { title: "Amount", data: "amount" },
+      { title: "Customer", data: "customer" },
+    ],
+    data: [
+      { id: 1, invoice_no: "INV001", invoice_date: "2023-07-01", amount: "$500", customer: "John Doe" },
+      { id: 2, invoice_no: "INV002", invoice_date: "2023-07-02", amount: "$600", customer: "Jane Smith" },
+      { id: 3, invoice_no: "INV003", invoice_date: "2023-07-03", amount: "$700", customer: "Chris Johnson" },
+      { id: 4, invoice_no: "INV004", invoice_date: "2023-07-04", amount: "$800", customer: "Patricia Lee" },
+    ],
+    width:'500px',
+    useSelectElement: true, // Use a select element for storing values
+    multiselect: true, // Enable multiselect
+    hiddenFields: ["id"], // Use ID as the hidden key
+    hidePreselected: true, // Optionally hide preselected rows
+    onSelectionChange: function (selectedRows) {
+      console.log("Selected Rows:", selectedRows);
+    },
+    onSelect: function (selectedRow) {
+      console.log("Single Selected Row:", selectedRow);
+    },
+  });
+
+
 });
 
   </script>
