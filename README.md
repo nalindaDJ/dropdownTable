@@ -6,27 +6,36 @@ The **Dropdown Table Plugin** is a lightweight and customizable jQuery plugin de
 ---
 ## Features
 
-- Displays dropdown data in a table format for better visibility.
-- Supports predefined data or dynamic data via AJAX.
-- Keyboard navigation for enhanced usability.
-- Multiselect functionality with dynamic tag-based selection display.
-- Callback functions for row selection and selection changes.
-- Hide preselected rows from the dropdown with an optional setting.
-- Customizable row templates for advanced formatting.
-- Conflict-free with prefixed CSS classes.
-- Lazy rendering for better performance with large datasets.
-- Enhanced ARIA accessibility for users.
+- **Flexible Data Sources**: Supports static data or dynamic data fetching via AJAX.
+- **Single and Multiselect Modes**: Choose between single selection or multiselect with tag-based display.
+- **Customizable Columns**: Define column titles, data keys, widths, and custom rendering functions.
+- **Sorting**: Enable sorting on specific columns with ascending/descending toggle.
+- **Keyboard Navigation**: Navigate and select rows using arrow keys, Enter, and Escape.
+- **Accessibility**: ARIA attributes for screen reader support and improved usability.
+- **Theming**: Light and dark themes for customizable appearance.
+- **Event Callbacks**: Hooks for selection, data load, open/close events, and error handling.
+- **Custom Row Templates**: Define custom HTML for table rows.
+- **Debounced Search**: Configurable debounce time for efficient AJAX searches.
+- **Hidden Fields**: Store additional data (e.g., IDs) with selected rows.
+- **Dynamic Updates**: Update data, settings, or theme programmatically.
 
 ---
 ## Installation
 
-Include the plugin script and jQuery in your HTML file:
+1. **Include jQuery**: Ensure jQuery is included in your project.
+   ```html
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   ```
 
-```html
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="path/to/dropdownTablePlugin.js"></script>
-<link rel="stylesheet" href="path/to/dropdownTableStyles.css">
-```
+2. **Include the Plugin**: Add the `jquery.dropdown.table.js` file to your project.
+   ```html
+   <script src="path/to/jquery.dropdown.table.js"></script>
+   ```
+
+3. **Include CSS (Optional)**: Add custom styles or use the provided CSS for theming.
+   ```html
+   <link rel="stylesheet" href="path/to/dropdown-table.css">
+   ```
 ---
 ## Usage
 
@@ -99,45 +108,219 @@ $(document).ready(function () {
 });
 ```
 
----
-## Options
+### AJAX with Multiselect Example
+```javascript
+$('#ajax-multiselect').dropdownTable({
+  columns: [
+    { title: 'Name', data: 'name' },
+    { title: 'Email', data: 'email' },
+    { title: 'Department', data: 'dept' }
+  ],
+  useAjax: true,
+  ajaxURL: '/api/users/search',
+  ajaxMethod: 'GET',
+  ajaxParams: function(query) {
+    return {
+      search: query,
+      department: 'active',
+      fields: 'id,name,email,dept'
+    };
+  },
+  multiselect: true,
+  hiddenFields: ['id'],
+  maxTagsDisplay: 3,
+  minLength: 2,
+  debounceTime: 500,
+  onSelectionChange: function(selectedRows) {
+    console.log('Selected count:', selectedRows.length);
+  }
+});
+```
 
-| Option             | Type       | Default     | Description                                                                |
-|--------------------|------------|-------------|----------------------------------------------------------------------------|
-| `columns`          | Array      | `[]`        | Array of column definitions `{ title: "Column Name", data: "key" }`.       |
-| `data`             | Array      | `[]`        | Predefined static data for the dropdown table.                             |
-| `useAjax`          | Boolean    | `false`     | Set to `true` to enable dynamic data fetching via AJAX.                    |
-| `ajaxURL`          | String     | `null`      | URL for fetching data dynamically.                                         |
-| `ajaxParams`       | Function   | `{}`        | Function or object to provide additional parameters for the AJAX request.  |
-| `hiddenFields`     | Array      | `[]`        | Fields to be stored as hidden attributes in rows.                          |
-| `limit`            | Integer    | `10`        | Maximum number of rows to display.                                         |
-| `onSelect`         | Function   | `null`      | Callback function triggered on row selection.                              |
-| `onSelectionChange`| Function   | `null`      | Callback function triggered when selected rows change (multiselect).       |
-| `width`            | String     | `auto`      | Width of the dropdown (`auto` or specific value like `300px`).             |
-| `hidePreselected`  | Boolean    | `false`     | Optionally hide rows already preselected in the dropdown.                  |
-| `multiselect`      | Boolean    | `false`     | Enable or disable multiselect functionality.                               |
+### Advanced Configuration Example
+```javascript
+$('#advanced-dropdown').dropdownTable({
+  columns: [
+    { title: '#', data: 'rowNum', width: '50px' },
+    { title: 'Product', data: 'name', sortable: true },
+    { title: 'Price', data: 'price', sortable: true, render: function(value) {
+      return '$' + parseFloat(value).toFixed(2);
+    }},
+    { title: 'Category', data: 'category' }
+  ],
+  data: productData,
+  multiselect: true,
+  showRowNumbers: true,
+  searchableColumns: ['name', 'category'],
+  limit: 20,
+  width: '600px',
+  theme: 'light',
+  rowTemplate: function(row, index) {
+    return `
+      <tr data-index="${index}" class="dropdown-row ${row.featured ? 'featured-row' : ''}">
+        <td class="select-cell">
+          <input type="checkbox" class="select-row" ${isRowSelected(row) ? 'checked' : ''}>
+        </td>
+        <td>${index + 1}</td>
+        <td><strong>${row.name}</strong></td>
+        <td class="price-cell">$${parseFloat(row.price).toFixed(2)}</td>
+        <td><span class="category-badge">${row.category}</span></td>
+      </tr>
+    `;
+  }
+});
+```
+
+## API Methods
+
+```javascript
+const dropdown = $('#my-dropdown').dropdownTable(config);
+
+// Update data
+dropdown.updateData(newData);
+
+// Clear selection
+dropdown.clearSelection();
+
+// Refresh dropdown
+dropdown.refresh();
+
+// Get selected rows
+const selected = dropdown.getSelectedRows();
+
+// Open/close dropdown
+dropdown.open();
+dropdown.close();
+
+// Enable/disable dropdown
+dropdown.enable();
+dropdown.disable();
+
+// Update settings
+dropdown.updateSettings({ limit: 50 });
+
+// Destroy plugin
+dropdown.destroy();
+```
+---
+## Configuration Options
+
+| Option                | Type          | Default                     | Description                                                                 |
+|-----------------------|---------------|-----------------------------|-----------------------------------------------------------------------------|
+| `columns`             | Array         | `[]`                        | Array of column objects `{ title, data, width, sortable, render }`.          |
+| `data`                | Array         | `[]`                        | Static data for the dropdown.                                               |
+| `useAjax`             | Boolean       | `false`                     | Enable AJAX data fetching.                                                  |
+| `ajaxURL`             | String        | `null`                      | URL for AJAX requests.                                                      |
+| `ajaxMethod`          | String        | `'GET'`                     | HTTP method for AJAX (`GET` or `POST`).                                     |
+| `ajaxParams`          | Object/Function | `{}`                     | Parameters for AJAX requests.                                               |
+| `minLength`           | Number        | `3`                         | Minimum input length to trigger AJAX.                                        |
+| `multiselect`         | Boolean       | `false`                     | Enable multiselect mode.                                                    |
+| `hiddenFields`        | Array         | `[]`                        | Hidden data fields to include in rows.                                      |
+| `defaultColumn`       | Number/String | `0`                         | Index or data key of the default column for input value.                    |
+| `limit`               | Number        | `10`                        | Maximum number of rows to display.                                          |
+| `debounceTime`        | Number        | `300`                       | Debounce time for input events (ms).                                        |
+| `ariaEnabled`         | Boolean       | `true`                      | Enable ARIA attributes for accessibility.                                   |
+| `theme`               | String        | `'light'`                   | Theme (`'light'` or `'dark'`).                                              |
+| `rowTemplate`         | Function      | `null`                      | Custom function to render table rows.                                       |
+| `onSelect`            | Function      | `null`                      | Callback on single row selection.                                           |
+| `onSelectionChange`   | Function      | `null`                      | Callback on multiselect changes.                                            |
+| `onOpen`              | Function      | `null`                      | Callback when dropdown opens.                                               |
+| `onClose`             | Function      | `null`                      | Callback when dropdown closes.                                              |
+| `onError`             | Function      | `null`                      | Callback on errors.                                                         |
+| `onDataLoad`          | Function      | `null`                      | Callback when data is loaded.                                               |
+
 
 ---
 ## New Features in Version 2.0
 
-- **Multiselect Support**: Allow users to select multiple rows and display tags for selected items.
-- **Hide Preselected Rows**: Optionally hide rows that are already preselected in the dropdown.
-- **Keyboard Navigation Enhancements**: Improved navigation with arrow keys and "Enter" for selection.
-- **Tag-based Selection Display**: Show selected items as tags with options to remove them.
-- **Lazy Rendering**: Optimized rendering for large datasets.
-- **ARIA Accessibility**: Improved support for screen readers and accessible navigation.
+1. **Theming Support**
+   - Added support for `light` and `dark` themes via the `theme` option and `data-theme` attribute on the dropdown container.
 
----
-## Known Issues
+2. **Advanced Keyboard Navigation**
+   - Enhanced keyboard navigation with `ArrowDown`, `ArrowUp`, `Enter`, `Escape`, and `Tab` key support.
+   - Added `enableKeyboardNavigation` option to toggle this feature.
+   - Improved scrolling behavior to keep highlighted rows in view.
 
-1. **Large Data Sets**: Rendering very large predefined datasets may impact performance. Consider using AJAX for such scenarios.
-2. **Custom Styling**: The default styles may require additional customization to fit specific UI designs.
+3. **Sorting Functionality**
+   - Introduced sortable columns with the `sortable` property in column definitions.
+   - Supports ascending and descending sorting for both numeric and string data.
 
----
-## Suggestions for Further Improvement
+4. **Multiselect Enhancements**
+   - Added a "Select All" checkbox in the table header for multiselect mode.
+   - Introduced `maxTagsDisplay` to limit the number of displayed tags and show a count for additional selections.
+   - Added `closeOnSelect` option to control whether the dropdown closes after a single selection.
 
-- Add support for server-side pagination when handling very large datasets.
-- Provide a default theme or better integration with popular CSS frameworks like Bootstrap.
+5. **Customizable Messages**
+   - Replaced `emptyStateMessage` with `noResultsText` for no results and retained `emptyStateMessage` for initial empty states.
+   - Configurable `loadingMessage` for custom loading indicators.
+
+6. **Row Numbering**
+   - Added `showRowNumbers` option to display row numbers in the first column.
+
+7. **Clear Selection**
+   - Introduced `allowClear` option to enable clearing of selections.
+   - Added `clearSelection` API method to programmatically clear selected rows.
+
+8. **Search Customization**
+   - Added `searchableColumns` to specify which columns are searchable.
+   - Introduced `caseSensitive` and `exactMatch` options for fine-tuned search behavior.
+
+9. **Dynamic Width Handling**
+   - Improved `width` option handling with automatic resizing on window resize events when set to `auto`.
+
+10. **Extended API Methods**
+    - Added new API methods: `selectAll`, `setValue`, `getValue`, `disable`, `enable`, `refresh`, `isOpen`, `getFilteredData`, `addToSelection`, `removeFromSelection`, and `setTheme`.
+    - Enhanced `updateSettings` method to allow dynamic updates to columns and other settings.
+
+11. **Improved AJAX Handling**
+    - Added `ajaxHeaders` option to include custom headers in AJAX requests.
+    - Improved AJAX response handling to support various response formats (e.g., `{ success, data }` or raw arrays).
+    - Added `keepOpenWhileTyping` to maintain dropdown visibility during typing, even below `minLength`.
+
+12. **Accessibility Enhancements**
+    - Added `ariaEnabled` option to toggle ARIA attributes.
+    - Improved ARIA attributes for better screen reader support (`aria-expanded`, `aria-haspopup`, `aria-owns`, etc.).
+
+13. **Error Handling**
+    - Added `onError` callback to handle AJAX or other errors.
+    - Displays error state in the dropdown when AJAX requests fail.
+
+14. **Auto Focus**
+    - Added `autoFocus` option to automatically focus the input on initialization.
+
+15. **Disabled State**
+    - Added `disabled` option to disable the dropdown and its interactions.
+
+16. **Placeholder Customization**
+    - Added `placeholder` option to customize the input's placeholder text.
+
+17. **Select All Text**
+    - Added `selectAllText` option to customize the "Select All" checkbox label.
+
+18. **Improved Tag Rendering**
+    - Enhanced tag rendering with HTML escaping for security.
+    - Added support for a "more" tag to indicate additional selections beyond `maxTagsDisplay`.
+
+19. **Lazy Rendering Optimization**
+    - Optimized row rendering to handle large datasets more efficiently by limiting displayed rows.
+
+20. **Event-Driven Callbacks**
+    - Added `onDataLoad` callback to notify when data is successfully loaded.
+
+21. **Robust Destroy Method**
+    - Improved `destroy` method to clean up event listeners, DOM elements, and pending AJAX requests.
+
+22. **Responsive Design**
+    - Added window resize event handling to adjust dropdown width dynamically.
+
+23. **Custom Row Template Validation**
+    - Enhanced validation for `rowTemplate` to ensure it returns valid HTML.
+
+24. **Selection Persistence**
+    - Improved handling of `selectedRows` to maintain selection state across data updates.
+
+25. **Hidden Field Attributes**
+    - Added data attributes for hidden fields on table rows for easier access.
 
 ---
 ## License

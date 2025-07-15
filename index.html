@@ -6,48 +6,161 @@
   <title>Dropdown Table Plugin Test</title>
   <link rel="stylesheet" href="dropdown-table.css"> <!-- Add your styles.css file here -->
   <style>
-    
+    /* Include the complete CSS from the v2 artifact here, or link to external file */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 20px;
+      background-color: #f9fafb;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #374151;
+      margin-bottom: 30px;
+    }
+
+    .test-section {
+      background: white;
+      padding: 24px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .test-section h3 {
+      margin-top: 0;
+      color: #1f2937;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    .dropdown-container {
+      margin-bottom: 24px;
+      max-width: 600px;
+    }
+
+    .dropdown-container label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .result-display {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #f3f4f6;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .api-demo {
+      margin-top: 20px;
+      padding: 16px;
+      background-color: #eff6ff;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .api-demo button {
+      margin: 4px 8px 4px 0;
+      padding: 8px 16px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .api-demo button:hover {
+      background: #2563eb;
+    }
   </style>
 </head>
 <body>
-  <h1>Dropdown Table Plugin Test</h1>
+  <h1>Dropdown Table Plugin v2.0 - Complete Test Suite</h1>
 
-  <!-- Static Data Test -->
-  <div class="dropdown-container">
-    <label for="static-dropdown">Static Data Dropdown:</label>
-    <input type="text" id="static-dropdown" placeholder="Search...">
+  <div class="test-section">
+    <h3>1. Static Data with Basic Configuration</h3>
+    <div class="dropdown-container">
+      <label for="static-dropdown">Static Data Dropdown:</label>
+      <input type="text" id="static-dropdown" placeholder="Search invoices...">
+      <div class="result-display" id="static-result">Results will appear here...</div>
+    </div>
   </div>
 
-  <!-- AJAX Data Test -->
-  <div class="dropdown-container">
-    <label for="ajax-dropdown">AJAX Data Dropdown:</label>
-    <input type="text" id="ajax-dropdown" placeholder="Search...">
+  <div class="test-section">
+    <h3>2. AJAX Data with Database Integration</h3>
+    <div class="dropdown-container">
+      <label for="ajax-dropdown">AJAX Data Dropdown:</label>
+      <input type="text" id="ajax-dropdown" placeholder="Search invoices from database...">
+      <div class="result-display" id="ajax-result">Results will appear here...</div>
+    </div>
   </div>
 
-  <!-- AJAX Data Test -->
-  <div class="dropdown-container">
-    <label for="ajax-addropdown">AJAX Data Additional param Dropdown:</label>
-    <input type="text" id="ajax-addropdown" placeholder="Search...">
+  <div class="test-section">
+    <h3>3. AJAX with Additional Parameters</h3>
+    <div class="dropdown-container">
+      <label for="ajax-params-dropdown">AJAX with Custom Parameters:</label>
+      <input type="text" id="ajax-params-dropdown" placeholder="Search with date filter...">
+      <div class="result-display" id="ajax-params-result">Results will appear here...</div>
+    </div>
   </div>
 
-
-  <div class="dropdown-container">
-    <label for="search-dropdown">Row Template</label>
-    <input type="text" id="search-dropdown" placeholder="Search...">
+  <div class="test-section">
+    <h3>4. Custom Row Template</h3>
+    <div class="dropdown-container">
+      <label for="template-dropdown">Custom Row Template:</label>
+      <input type="text" id="template-dropdown" placeholder="Search with custom styling...">
+      <div class="result-display" id="template-result">Results will appear here...</div>
+    </div>
   </div>
 
-  <div class="dropdown-container">
-    <label for="ajax-multidropdown">AJAX Data Dropdown:</label>
-    <input type="text" id="ajax-multidropdown" placeholder="Search..." />
+  <div class="test-section">
+    <h3>5. Multiselect Mode</h3>
+    <div class="dropdown-container">
+      <label for="multiselect-dropdown">Multiselect Dropdown:</label>
+      <input type="text" id="multiselect-dropdown" placeholder="Search and select multiple...">
+      <div class="result-display" id="multiselect-result">Selected items will appear here...</div>
+    </div>
   </div>
 
-  <div class="dropdown-container">
-    <label for="select-dropdown">Select Dropdown:</label>
-    <select id="select-dropdown" multiple>
-      <!-- Pre-existing values -->
-      <option value="1">INV001</option>
-      <option value="3">INV003</option>
-    </select>
+  <div class="test-section">
+    <h3>6. Select Element with Preselected Values</h3>
+    <div class="dropdown-container">
+      <label for="select-dropdown">Select Element Dropdown:</label>
+      <select id="select-dropdown" multiple style="display: none;">
+        <!-- Pre-existing values -->
+        <option value="1">INV001</option>
+        <option value="3">INV003</option>
+      </select>
+      <div class="result-display" id="select-result">Selected values will appear here...</div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h3>7. API Methods Demo</h3>
+    <div class="dropdown-container">
+      <label for="api-dropdown">API Testing Dropdown:</label>
+      <input type="text" id="api-dropdown" placeholder="Test API methods...">
+      <div class="api-demo">
+        <h4>Test API Methods:</h4>
+        <button onclick="testUpdateData()">Update Data</button>
+        <button onclick="testClearSelection()">Clear Selection</button>
+        <button onclick="testSelectAll()">Select All</button>
+        <button onclick="testSetValue()">Set Value</button>
+        <button onclick="testDisable()">Disable</button>
+        <button onclick="testEnable()">Enable</button>
+        <button onclick="testRefresh()">Refresh</button>
+        <button onclick="testGetSelected()">Get Selected</button>
+      </div>
+      <div class="result-display" id="api-result">API method results will appear here...</div>
+    </div>
   </div>
   
 
@@ -55,154 +168,259 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="jquery.dropdown-table.js"></script> <!-- Add your plugin JS file here -->
 
+ <!-- Include the corrected dropdown table plugin -->
   <script>
-   $(document).ready(function () {
-    // Static Data Example
-    $('#static-dropdown').dropdownTable({
-      columns: [
-        { title: 'Invoice No', data: 'invoiceNo' },
-        { title: 'Invoice Date', data: 'invoiceDate' },
-        { title: 'Amount', data: 'amount' },
-      ],
-      hiddenField: 'id', // Hidden field (e.g., primary key)
-      data: [
-        { id: 1, invoiceNo: 'INVCVR2400099271', invoiceDate: '10/28/2024', amount: '33579.04' },
-        { id: 2, invoiceNo: 'INVCVR2400099225', invoiceDate: '10/28/2024', amount: '2892.73' },
-        { id: 3, invoiceNo: 'INVCVR2400099176', invoiceDate: '10/28/2024', amount: '37062.62' },
-        { id: 4, invoiceNo: 'INVCVR2400099000', invoiceDate: '10/27/2024', amount: '12345.67' },
-        { id: 5, invoiceNo: 'INVCVR2400098555', invoiceDate: '10/26/2024', amount: '54321.00' },
-      ],
-      useAjax: false,
-      width:'700px',
-      limit: 3, // Show only 3 results
-      onSelect: function (selectedData) {
-        console.log('Selected Data (Static):', selectedData);
-      },
+    // Include the complete v2 plugin code here or link to external file
+    // [Plugin code from the v2 artifact would go here]
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      // Store dropdown instances for API testing
+      window.dropdownInstances = {};
+
+      // 1. Static Data Example (CORRECTED)
+      window.dropdownInstances.static = $('#static-dropdown').dropdownTable({
+        columns: [
+          { title: 'Invoice No', data: 'invoiceNo' },
+          { title: 'Invoice Date', data: 'invoiceDate' },
+          { title: 'Amount', data: 'amount' },
+        ],
+        hiddenFields: ['id'], // CORRECTED: Use array instead of string
+        data: [
+          { id: 1, invoiceNo: 'INVCVR2400099271', invoiceDate: '10/28/2024', amount: '33579.04' },
+          { id: 2, invoiceNo: 'INVCVR2400099225', invoiceDate: '10/28/2024', amount: '2892.73' },
+          { id: 3, invoiceNo: 'INVCVR2400099176', invoiceDate: '10/28/2024', amount: '37062.62' },
+          { id: 4, invoiceNo: 'INVCVR2400099000', invoiceDate: '10/27/2024', amount: '12345.67' },
+          { id: 5, invoiceNo: 'INVCVR2400098555', invoiceDate: '10/26/2024', amount: '54321.00' },
+        ],
+        useAjax: false,
+        width: '100%',
+        limit: 10, // Increased from 3
+        closeOnSelect: true,
+        onSelect: function (selectedData) {
+          console.log('Selected Data (Static):', selectedData);
+          $('#static-result').text(JSON.stringify(selectedData, null, 2));
+        },
+      });
+
+      // 2. AJAX Data Example (CORRECTED)
+      window.dropdownInstances.ajax = $('#ajax-dropdown').dropdownTable({
+        columns: [
+          { title: '#', data: 'row_num' },
+          { title: 'Invoice No', data: 'invoiceNo' },
+          { title: 'Invoice Date', data: 'invoiceDate' },
+          { title: 'Amount', data: 'amount' },
+          { title: 'Customer', data: 'customerName' },
+        ],
+        width: '100%',
+        hiddenFields: ['id'], // CORRECTED: Use array
+        defaultColumn: 1,
+        ajaxURL: 'invdb.php',
+        useAjax: true,
+        minLength: 2, // Start searching after 2 characters
+        limit: 50,
+        debounceTime: 500,
+        onSelect: function (selectedData) {
+          console.log('Selected Data (AJAX):', selectedData);
+          $('#ajax-result').text(JSON.stringify(selectedData, null, 2));
+        },
+        onError: function(error) {
+          $('#ajax-result').text('Error: ' + error.message);
+        }
+      });
+
+      // 3. AJAX with Additional Parameters (CORRECTED)
+      window.dropdownInstances.ajaxParams = $('#ajax-params-dropdown').dropdownTable({
+        columns: [
+          { title: 'Invoice No', data: 'invoiceNo' },
+          { title: 'Invoice Date', data: 'invoiceDate' },
+          { title: 'Amount', data: 'amount' },
+          { title: 'Customer', data: 'customerName' },
+        ],
+        width: '100%',
+        hiddenFields: ['id'], // CORRECTED: Use array
+        ajaxURL: 'invdb2.php',
+        useAjax: true,
+        ajaxParams: function(query) {
+          // Dynamic parameters function
+          return {
+            invdate: '2024-10-28',
+            status: 'active',
+            department: 'sales'
+          };
+        },
+        minLength: 2,
+        onSelect: function (selectedData) {
+          console.log('Selected Data (AJAX with params):', selectedData);
+          $('#ajax-params-result').text(JSON.stringify(selectedData, null, 2));
+        }
+      });
+
+      // 4. Custom Row Template (ENHANCED)
+      window.dropdownInstances.template = $("#template-dropdown").dropdownTable({
+        columns: [
+          { title: "#", data: "id" },
+          { title: "Invoice No", data: "invoice_no" },
+          { title: "Amount", data: "amount" },
+          { title: "Customer", data: "customer" }
+        ],
+        data: [
+          { id: 1, invoice_no: "INV001", amount: "500.00", customer: "John Doe" },
+          { id: 2, invoice_no: "INV002", amount: "300.00", customer: "Jane Smith" },
+          { id: 3, invoice_no: "INV003", amount: "200.00", customer: "Chris Johnson" },
+          { id: 4, invoice_no: "INV004", amount: "750.00", customer: "Patricia Lee" }
+        ],
+        hiddenFields: ['id'],
+        rowTemplate: function (row, index) {
+          const amountColor = parseFloat(row.amount) > 400 ? 'green' : 'orange';
+          return `
+            <tr data-index="${index}" class="dropdown-row">
+              <td style="text-align: center; font-weight: bold;">${index + 1}</td>
+              <td><strong style="color: #2563eb;">${row.invoice_no}</strong></td>
+              <td style="color: ${amountColor}; font-weight: 600;">$${row.amount}</td>
+              <td><em style="color: #6b7280;">${row.customer}</em></td>
+            </tr>
+          `;
+        },
+        width: '100%',
+        onSelect: function (row) {
+          console.log("Selected Row (Template):", row);
+          $('#template-result').text(JSON.stringify(row, null, 2));
+        },
+      });
+
+      // 5. Multiselect Mode (ENHANCED)
+      window.dropdownInstances.multiselect = $("#multiselect-dropdown").dropdownTable({
+        columns: [
+          { title: "#", data: "id" },
+          { title: "Invoice No", data: "invoice_no" },
+          { title: "Invoice Date", data: "invoice_date" },
+          { title: "Amount", data: "amount" },
+          { title: "Customer", data: "customer" },
+        ],
+        data: [
+          { id: 1, invoice_no: "INV001", invoice_date: "2023-07-01", amount: "$500", customer: "John Doe" },
+          { id: 2, invoice_no: "INV002", invoice_date: "2023-07-02", amount: "$600", customer: "Jane Smith" },
+          { id: 3, invoice_no: "INV003", invoice_date: "2023-07-03", amount: "$700", customer: "Chris Johnson" },
+          { id: 4, invoice_no: "INV004", invoice_date: "2023-07-04", amount: "$800", customer: "Patricia Lee" },
+          { id: 5, invoice_no: "INV005", invoice_date: "2023-07-05", amount: "$900", customer: "Michael Brown" },
+        ],
+        hiddenFields: ['id'],
+        multiselect: true,
+        maxTagsDisplay: 2, // Show max 2 tags
+        width: '100%',
+        onSelect: function (selectedRow) {
+          console.log("Selected Row:", selectedRow);
+        },
+        onSelectionChange: function (selectedRows) {
+          console.log("Selection Changed:", selectedRows);
+          $('#multiselect-result').text(
+            `Selected ${selectedRows.length} items:\n` + 
+            JSON.stringify(selectedRows, null, 2)
+          );
+        },
+      });
+
+      // 6. Select Element with Preselected Values (CORRECTED)
+      window.dropdownInstances.selectElement = $("#select-dropdown").dropdownTable({
+        columns: [
+          { title: "#", data: "id" },
+          { title: "Invoice No", data: "invoice_no" },
+          { title: "Invoice Date", data: "invoice_date" },
+          { title: "Amount", data: "amount" },
+          { title: "Customer", data: "customer" },
+        ],
+        data: [
+          { id: 1, invoice_no: "INV001", invoice_date: "2023-07-01", amount: "$500", customer: "John Doe" },
+          { id: 2, invoice_no: "INV002", invoice_date: "2023-07-02", amount: "$600", customer: "Jane Smith" },
+          { id: 3, invoice_no: "INV003", invoice_date: "2023-07-03", amount: "$700", customer: "Chris Johnson" },
+          { id: 4, invoice_no: "INV004", invoice_date: "2023-07-04", amount: "$800", customer: "Patricia Lee" },
+        ],
+        width: '100%',
+        useSelectElement: true,
+        multiselect: true,
+        hiddenFields: ["id"],
+        hidePreselected: true,
+        defaultColumn: 1, // Use invoice_no as display value
+        onSelectionChange: function (selectedRows) {
+          console.log("Selected Rows (Select Element):", selectedRows);
+          $('#select-result').text(
+            `Selected values in select element:\n` + 
+            JSON.stringify(selectedRows, null, 2)
+          );
+        },
+        onSelect: function (selectedRow) {
+          console.log("Single Selected Row:", selectedRow);
+        },
+      });
+
+      // 7. API Testing Dropdown
+      window.dropdownInstances.api = $("#api-dropdown").dropdownTable({
+        columns: [
+          { title: "ID", data: "id" },
+          { title: "Name", data: "name" },
+          { title: "Value", data: "value" }
+        ],
+        data: [
+          { id: 1, name: "Item 1", value: "Value 1" },
+          { id: 2, name: "Item 2", value: "Value 2" },
+          { id: 3, name: "Item 3", value: "Value 3" }
+        ],
+        hiddenFields: ['id'],
+        multiselect: true,
+        width: '100%',
+        onSelectionChange: function(selectedRows) {
+          $('#api-result').text(`Current selection: ${selectedRows.length} items`);
+        }
+      });
     });
 
+    // API Testing Functions
+    function testUpdateData() {
+      const newData = [
+        { id: 10, name: "New Item 1", value: "New Value 1" },
+        { id: 11, name: "New Item 2", value: "New Value 2" },
+        { id: 12, name: "New Item 3", value: "New Value 3" }
+      ];
+      window.dropdownInstances.api.updateData(newData);
+      $('#api-result').text('Data updated with new items');
+    }
 
-    // AJAX Data Example
-    $('#ajax-dropdown').dropdownTable({
-      columns: [
-        { title: '#', data: 'row_num' },
-        { title: 'Invoice No', data: 'invoiceNo' },
-        { title: 'Invoice Date', data: 'invoiceDate' },
-        { title: 'Amount', data: 'amount' },
-        { title: 'Customer', data: 'customerName' },
-      ],
-      width:'800px',
-      hiddenField: ['id'], // Hidden field (e.g., primary key)
-      defaultColumn: 1,
-      ajaxURL: 'invoice_db.php', // Replace with your API endpoint
-      useAjax: true,
-      limit: 100, // Show only 3 results
-      onSelect: function (selectedData) {
-        console.log('Selected Data (AJAX):', selectedData);
-      },
-    });
+    function testClearSelection() {
+      window.dropdownInstances.api.clearSelection();
+      $('#api-result').text('Selection cleared');
+    }
 
-     // AJAX Data Example
-     $('#ajax-addropdown').dropdownTable({
-      columns: [
-        { title: 'Invoice No', data: 'invoiceNo' },
-        { title: 'Invoice Date', data: 'invoiceDate' },
-        { title: 'Amount', data: 'amount' },
-        { title: 'Customer', data: 'customerName' },
-      ],
-      width:'800px',
-      hiddenField: 'id', // Hidden field (e.g., primary key)
-      ajaxURL: 'invoice_db2.php', // Replace with your API endpoint
-      useAjax: true,
-      ajaxParams:{invdate: '2024-01-10', status: { 'msgs' : 'OK','code' : '200'}},
-      onSelect: function (selectedData) {
-        console.log('Selected Data (AJAX):', selectedData);
-      },
-    });
+    function testSelectAll() {
+      window.dropdownInstances.api.selectAll();
+      $('#api-result').text('All items selected');
+    }
 
+    function testSetValue() {
+      window.dropdownInstances.api.setValue('New');
+      $('#api-result').text('Value set to "New"');
+    }
 
-    $("#search-dropdown").dropdownTable({
-    columns: [
-      { title: "#", data: "id" },
-      { title: "Invoice No", data: "invoice_no" },
-      { title: "Amount", data: "amount" },
-      { title: "Customer", data: "customer" }
-    ],
-    data: [
-      { id: 1, invoice_no: "INV001", amount: "$500", customer: "John Doe" },
-      { id: 2, invoice_no: "INV002", amount: "$300", customer: "Jane Smith" },
-      { id: 3, invoice_no: "INV003", amount: "$200", customer: "Chris Johnson" }
-    ],
-    rowTemplate: function (row, index) {
-      // Custom HTML for each row
-      return `
-        <tr data-index="${index}">
-          <td>${index + 1}</td>
-          <td><strong>${row.invoice_no}</strong></td>
-          <td style="color: green;">${row.amount}</td>
-          <td><em>${row.customer}</em></td>
-        </tr>
-      `;
-    },
-    onSelect: function (row) {
-      console.log("Selected Row:", row);
-    },
-  });
+    function testDisable() {
+      window.dropdownInstances.api.disable();
+      $('#api-result').text('Dropdown disabled');
+    }
 
+    function testEnable() {
+      window.dropdownInstances.api.enable();
+      $('#api-result').text('Dropdown enabled');
+    }
 
-  $("#ajax-multidropdown").dropdownTable({
-    columns: [
-      { title: "#", data: "id" },
-      { title: "Invoice No", data: "invoice_no" },
-      { title: "Invoice Date", data: "invoice_date" },
-      { title: "Amount", data: "amount" },
-      { title: "Customer", data: "customer" },
-    ],
-    data: [
-      { id: 1, invoice_no: "INV001", invoice_date: "2023-07-01", amount: "$500", customer: "John Doe" },
-      { id: 2, invoice_no: "INV002", invoice_date: "2023-07-02", amount: "$600", customer: "Jane Smith" },
-      { id: 3, invoice_no: "INV003", invoice_date: "2023-07-03", amount: "$700", customer: "Chris Johnson" },
-      { id: 4, invoice_no: "INV004", invoice_date: "2023-07-04", amount: "$800", customer: "Patricia Lee" },
-    ],
-    multiselect: true, // Enable multiselect
-    onSelect: function (selectedRow) {
-      console.log("Selected Row:", selectedRow);
-    },
-    onSelectionChange: function (selectedRows) {
-      console.log("Selection Changed:", selectedRows);
-    },
-  });
+    function testRefresh() {
+      window.dropdownInstances.api.refresh();
+      $('#api-result').text('Dropdown refreshed');
+    }
 
-
-  $("#select-dropdown").dropdownTable({
-    columns: [
-      { title: "#", data: "id" },
-      { title: "Invoice No", data: "invoice_no" },
-      { title: "Invoice Date", data: "invoice_date" },
-      { title: "Amount", data: "amount" },
-      { title: "Customer", data: "customer" },
-    ],
-    data: [
-      { id: 1, invoice_no: "INV001", invoice_date: "2023-07-01", amount: "$500", customer: "John Doe" },
-      { id: 2, invoice_no: "INV002", invoice_date: "2023-07-02", amount: "$600", customer: "Jane Smith" },
-      { id: 3, invoice_no: "INV003", invoice_date: "2023-07-03", amount: "$700", customer: "Chris Johnson" },
-      { id: 4, invoice_no: "INV004", invoice_date: "2023-07-04", amount: "$800", customer: "Patricia Lee" },
-    ],
-    width:'500px',
-    useSelectElement: true, // Use a select element for storing values
-    multiselect: true, // Enable multiselect
-    hiddenFields: ["id"], // Use ID as the hidden key
-    hidePreselected: true, // Optionally hide preselected rows
-    onSelectionChange: function (selectedRows) {
-      console.log("Selected Rows:", selectedRows);
-    },
-    onSelect: function (selectedRow) {
-      console.log("Single Selected Row:", selectedRow);
-    },
-  });
-
-
-});
-
+    function testGetSelected() {
+      const selected = window.dropdownInstances.api.getSelectedRows();
+      $('#api-result').text(`Selected rows: ${JSON.stringify(selected, null, 2)}`);
+    }
   </script>
 </body>
 </html>
