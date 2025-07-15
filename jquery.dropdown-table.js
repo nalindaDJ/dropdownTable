@@ -1,9 +1,11 @@
 /*
- * jQuery Dropdown Table Plugin - Complete v2.0 Final
- *
+ * jQuery Dropdown Table Plugin - v2.2
+ * A versatile jQuery plugin that transforms input fields into interactive dropdown tables with support for static or AJAX data, 
+ * single or multiselect modes, customizable columns, and keyboard navigation. Features include theming, accessibility, sorting, 
+ * and event-driven callbacks for seamless integration.
  * @author: Damith Jayasinghe
  * @license: MIT
- * @version: 2.0.0-final
+ * @version: 2.2.0
  */
 
 (function ($) {
@@ -460,7 +462,6 @@
                     data: ajaxParams,
                     headers: settings.ajaxHeaders,
                     success: function (response) {
-                        console.log('AJAX Success - Response:', response); // Debug log
 
                         hideLoading();
 
@@ -481,13 +482,9 @@
                             }
                         }
 
-                        console.log('Processed data:', data); // Debug log
-
                         // Update filtered data
                         filteredData = Array.isArray(data) ? data.slice(0, settings.limit) : [];
                         currentHighlightIndex = -1;
-
-                        console.log('Filtered data length:', filteredData.length); // Debug log
 
                         // Render rows
                         renderRows(filteredData);
@@ -501,8 +498,6 @@
                             $input.attr('aria-expanded', 'true');
                         }
 
-                        console.log('Dropdown should be visible now'); // Debug log
-
                         if (settings.onDataLoad) {
                             settings.onDataLoad(data);
                         }
@@ -512,8 +507,6 @@
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.log('AJAX Error:', status, error); // Debug log
-
                         hideLoading();
                         if (status !== 'abort') {
                             const errorMsg = `Failed to fetch data: ${error}`;
@@ -935,20 +928,15 @@
             }
 
             function openDropdown(force = false) {
-                console.log('openDropdown called - force:', force, 'isOpen:', isOpen, 'disabled:', settings.disabled, 'input focused:', $input.is(':focus')); // Debug log
-
                 if (isOpen || settings.disabled) return;
 
                 // Don't open if input is not focused unless forced
                 if (!force && !$input.is(':focus')) {
-                    console.log('Not opening - input not focused and not forced'); // Debug log
                     return;
                 }
 
                 isOpen = true;
                 $dropdownTable.removeClass('hidden');
-
-                console.log('Dropdown opened successfully'); // Debug log
 
                 if (settings.ariaEnabled) {
                     $input.attr('aria-expanded', 'true');
@@ -980,13 +968,11 @@
             }
 
             function showLoading() {
-                console.log('Showing loading...'); // Debug log
                 $loadingIndicator.removeClass('hidden');
                 $dropdownTable.addClass('hidden');
             }
 
             function hideLoading() {
-                console.log('Hiding loading...'); // Debug log
                 $loadingIndicator.addClass('hidden');
             }
 
